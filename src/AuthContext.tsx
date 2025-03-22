@@ -8,14 +8,3 @@ interface AuthContextType {
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
-
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  return (
-    <AuthContext.Provider value={{ username, password, setUsername, setPassword }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};

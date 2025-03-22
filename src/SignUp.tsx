@@ -14,6 +14,9 @@ const SignUp: React.FC = () => {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
+        setUsername(localUsername)
+        setPassword(localPassword)
+
         if (localPassword.length < 8) {
             setError("Password must be at least 8 characters long.");
             return;
@@ -35,8 +38,6 @@ const SignUp: React.FC = () => {
         }
 
         setError("");
-        setUsername(localUsername)
-        setPassword(localPassword)
         alert("Sign-up successful!");
 
         setLocalUsername("")
