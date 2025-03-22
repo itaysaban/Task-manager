@@ -1,39 +1,46 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FormEvent } from "react";
+import { AuthContext} from "./AuthContext";
 
 const SignUp: React.FC = () => {
 
-    const [username, setUserName] = useState<string>("")
-    const [password, setPassword] = useState<string>("")
+    const authContext = useContext(AuthContext)
+    const {setUsername, setPassword} = authContext!;
+    const [localUsername, setLocalUsername] = useState("");
+    const [localPassword, setLocalPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState<string>("")
     const [error, setError] = useState<string>("")
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
-        if (password.length < 8) {
+        if (localPassword.length < 8) {
             setError("Password must be at least 8 characters long.");
             return;
         }
 
-        if (!/\d/.test(password)) {
+        if (!/\d/.test(localPassword)) {
             setError("Password must contain at least one digit.");
             return;
         }
 
-        if (!/[A-Z]/.test(password)){
+        if (!/[A-Z]/.test(localPassword)){
             setError("Password must contain at least one uppercase letter.");
                 return;
         }
 
-        if (password !== confirmPassword){
+        if (localPassword !== confirmPassword){
             setError("Passwords do not match.");
         return;
         }
 
         setError("");
+        setUsername(localUsername)
+        setPassword(localPassword)
         alert("Sign-up successful!");
-        setUserName("")
+
+        setLocalUsername("")
+        setLocalPassword("")
         setConfirmPassword("")
     };
 
@@ -46,14 +53,14 @@ const SignUp: React.FC = () => {
                         <input className="signup-username"
                         type="text"
                         placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUserName(e.target.value)}/>
+                        value={localUsername}
+                        onChange={(e) => setLocalUsername(e.target.value)}/>
 
                         <input className="signup-password"
                         type="password"
                         placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}/>
+                        value={localPassword}
+                        onChange={(e) => setLocalPassword(e.target.value)}/>
 
                         <input className="signup-confirm-password"
                         type="password"
