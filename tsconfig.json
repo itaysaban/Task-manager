@@ -1,26 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es5",                              // Targets older JS versions for compatibility
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    ], 
+    "allowJs": true,                               // Allow JS files in the project
+    "skipLibCheck": true,                          // Skips type checking of declaration files (faster)
+    "esModuleInterop": true,                       // Allows default imports from non-default-exported modules
+    "allowSyntheticDefaultImports": true,          // Allows default imports to be treated like ES6
+    "strict": true,                                // Enables strict type checking
+    "forceConsistentCasingInFileNames": true,      // Ensures consistent casing in file names
+    "noFallthroughCasesInSwitch": true,            // Prevents fallthrough in switch statements
+    "module": "esnext",                            // Specifies the module system to use (ES Modules)
+    "moduleResolution": "node",                    // Resolves node modules properly
+    "resolveJsonModule": true,                     // Allows importing of JSON modules
+    "isolatedModules": true,                       // Ensures that every file can be safely transpiled
+    "noEmit": true,                                // Prevents emitting output files (used in React for JSX/TSX)
+    "jsx": "react-jsx"                             // Uses the new JSX transform (React 17+)
   },
   "include": [
-    "src"
+    "src/**/*"                                     // Include all files in the src folder
+  ],
+  "exclude": [
+    "node_modules"                                 // Exclude node_modules from being compiled
   ]
 }

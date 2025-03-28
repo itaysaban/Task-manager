@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { FormEvent } from "react";
 import { AuthContext} from "./AuthContext";
+import axios from "axios"
+import userEvent from "@testing-library/user-event";
 
 const SignUp: React.FC = () => {
 
@@ -11,7 +13,7 @@ const SignUp: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>("")
     const [error, setError] = useState<string>("")
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
         setUsername(localUsername)
@@ -38,12 +40,25 @@ const SignUp: React.FC = () => {
         }
 
         setError("");
-        alert("Sign-up successful!");
-
-        setLocalUsername("")
-        setLocalPassword("")
-        setConfirmPassword("")
-    };
+        try {
+            const response = await axios.post("/api/signup", {
+              username: localUsername,
+              password: localPassword,
+            });
+      
+            if (response.data.success) {
+              alert("Sign-up successful!");
+            } else {
+              setError(response.data.message || "Sign-up failed. Try again.");
+            }
+          } catch (error) {
+            setError("Error during sign-up. Please try again.");
+          }
+      
+          setLocalUsername("");
+          setLocalPassword("");
+          setConfirmPassword("");
+        };
 
     return (
         <div className="signup-container">
