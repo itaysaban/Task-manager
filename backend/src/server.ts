@@ -6,6 +6,8 @@ import { useAuthRoutes } from "./routes/auth";
 
 dotenv.config();
 
+console.log("JWT_SECRET: ", process.env.JWT_SECRET)
+
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI as string;
 

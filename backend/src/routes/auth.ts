@@ -7,8 +7,48 @@ export const useAuthRoutes = (app: Express) => {
   // Signup route
   app.post("/api/signup", async (req: Request, res: Response) => {
     try {
-      const { username, password } = req.body;
+      const { username, password, confirmPassword } = req.body;
+      
+      if (password.length < 8) {
+          res.status(400).json({
+          success: false,
+          message: "Password must be at least 8 characters long.",
+        })
+        return;
+      }
+  
+      if (!/\d/.test(password)) {
+          res.status(400).json({
+          success: false,
+          message: "Password must contain at least one digit.",
+        })
+      return;
+      }
+  
+      if (!/[A-Z]/.test(password)) {
+          res.status(400).json({
+          success: false,
+          message: "Password must contain at least one uppercase letter.",
+        })
+        return;
+      }
 
+      if (password !== confirmPassword){
+        res.status(400).json({
+          success: false,
+          message: "Passwords do not match.",
+        })
+        return;
+      }
+
+      const englishLettersRegex = /^[A-Za-z]+$/;
+      if (!englishLettersRegex.test(password)){
+        res.status(400).json({
+          success: false,
+          message: "Password contains non-english letters"
+        })
+      }
+      
       // Check if the user already exists
       const existingUser = await User.findOne({ username });
       if (existingUser) {
@@ -59,7 +99,7 @@ export const useAuthRoutes = (app: Express) => {
 
       // Generate a token
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, {
-        expiresIn: "1h",
+        expiresIn: "15m",
       });
 
       res.status(200).json({ message: "Login successful", token });
